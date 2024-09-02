@@ -92,7 +92,7 @@ end
 ---@param user_config CsharpConfig?
 ---@return CsharpConfig
 function M.set_defaults(user_config)
-  if user_config == nil or vim.tbl_isempty(user_config) then
+  if user_config == nil then
     return M.get_defaults()
   end
 
