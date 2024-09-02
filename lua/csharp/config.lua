@@ -78,13 +78,6 @@ local default_config = {
   },
 }
 
----@param default_config table
----@param user_config table
----@return table
-local function merge(default_config, user_config)
-  return vim.tbl_deep_extend("force", default_config, user_config)
-end
-
 function M.get_defaults()
   return vim.tbl_deep_extend("force", default_config, {})
 end
@@ -96,30 +89,7 @@ function M.set_defaults(user_config)
     return M.get_defaults()
   end
 
-  --- @type CsharpConfig
-  local merged_config = merge(default_config, user_config)
-
-  local deprecated_omnisharp_keys = {
-    "enable",
-    "enable_editor_config_support",
-    "organize_imports",
-    "load_projects_on_demand",
-    "enable_analyzers_support",
-    "enable_import_completion",
-    "include_prerelease_sdks",
-    "analyze_open_documents_only",
-    "default_timeout",
-    "enable_package_auto_restore",
-    "debug",
-  }
-
-  for index, key in ipairs(deprecated_omnisharp_keys) do
-    if merged_config.lsp.omnisharp[key] ~= nil then
-      merged_config.lsp.omnisharp[key] = nil
-    end
-  end
-
-  return merged_config
+  return user_config
 end
 
 ---@param user_config CsharpConfig
